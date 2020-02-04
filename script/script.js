@@ -1,0 +1,31 @@
+'use strict';
+
+let count = document.getElementById('start');
+let addExtraIncome = document.getElementsByTagName('button')[0];
+let addExpenses = document.getElementsByTagName('button')[1];
+let deposit = document.querySelector('#deposit-check');
+let income = document.querySelectorAll('.additional_income-item');
+let result = document.querySelectorAll('.result-total');
+let monthIncome = document.querySelector('.salary-amount');
+let extraIncomeTitle = document.querySelectorAll('.income-title')[1];
+let extraIncomeAmount = document.querySelector('.income-amount');
+let espensesTitle = document.querySelectorAll('.expenses-title')[1];
+let espensesAmount = document.querySelector('.expenses-amount');
+let additionalEspensesTitle = document.querySelector('.additional_expenses-item');
+let target = document.querySelector('.target-amount');
+let period = document.querySelector('.period-select');
+
+console.log(count);
+console.log(addExtraIncome);
+console.log(addExpenses);
+console.log(deposit);
+console.log(income);
+console.log(result);
+console.log(monthIncome);
+console.log(extraIncomeTitle);
+console.log(extraIncomeAmount);
+console.log(espensesTitle);
+console.log(espensesAmount);
+console.log(additionalEspensesTitle);
+console.log(target);
+console.log(period);
