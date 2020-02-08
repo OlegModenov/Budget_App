@@ -74,7 +74,10 @@ let appData = {
   // Функция добавляет дополнительный блок расходов при клике на +
   addExpensesBlock: function () {
 
-    let cloneExpensesItem = expensesItems[0].cloneNode(true);
+    let cloneExpensesItem = expensesItems[0].cloneNode(true);    
+    cloneExpensesItem.childNodes.forEach(function (item) {
+      item.value = '';
+    });
     expensesItems[0].parentNode.insertBefore(cloneExpensesItem, addExpenses);
     expensesItems = document.querySelectorAll('.expenses-items');
 
@@ -123,6 +126,9 @@ let appData = {
     let cloneIncome = extraIncomeItems[0].cloneNode(true);
     extraIncomeItems[0].parentNode.insertBefore(cloneIncome, addExtraIncome);
     extraIncomeItems = document.querySelectorAll('.income-items');
+    cloneIncome.childNodes.forEach(function (item) {
+      item.value = '';
+    });
 
     if (extraIncomeItems.length === 3) {
       addExtraIncome.style.display = 'none';
