@@ -1,5 +1,6 @@
 'use strict';
 
+
 let count = document.getElementById('start');
 let addExtraIncome = document.getElementsByTagName('button')[0];
 let addExpenses = document.getElementsByTagName('button')[1];
@@ -23,9 +24,46 @@ let targetAmount = document.querySelector('.target-amount');
 let periodSelect = document.querySelector('.period-select');
 let periodAmount = document.querySelector('.period-amount');
 
-let isNumber = function (n) {
-  return !isNaN(parseFloat(n)) && isFinite(n);
+let placeholderNumber = document.querySelectorAll('[placeholder="Сумма"]');
+let placeholderText = document.querySelectorAll('[placeholder="Наименование"]');
+
+let isNumber = function (number) {
+  return !isNaN(parseFloat(number)) && isFinite(number);
 };
+
+let consistNotRussianLetter = function (str) {
+  let notRussianLetters = /[^А-Я, ^а-я]/;
+  if (str.match(notRussianLetters) !== null) return true;
+  return false;
+}
+
+// Функция не дает вводить пользователю в поле ничего, кроме русских букв
+let validateInputText = function () {
+
+  placeholderText.forEach(function (item) {
+    item.addEventListener('input', function () {
+      if (consistNotRussianLetter(item.value)) {
+        item.value = item.value.slice(0, item.value.length - 1);
+      }
+    })
+  })
+}
+
+
+// Функция не дает вводить пользователю в поле ничего, кроме цифр
+let validateInputNumber = function () {
+
+  placeholderNumber.forEach(function (item) {
+    item.addEventListener('input', function () {
+      if (!isNumber(item.value)) {
+        item.value = item.value.slice(0, item.value.length - 1);
+      }
+    })
+  })
+}
+
+validateInputText();
+validateInputNumber();
 
 let appData = {
   income: {},
@@ -43,11 +81,7 @@ let appData = {
 
   start: function () {
 
-    if(isNumber(monthIncome.value)) {
-      appData.budget = Number(monthIncome.value);
-    } else {
-      alert('Введите число в поле "Месячный доход"');
-    }
+    appData.budget = Number(monthIncome.value);
     appData.getExpenses();
     appData.getExtraIncome();
     appData.getExpensesMonth();
@@ -55,15 +89,23 @@ let appData = {
     appData.getAddExpenses();
     appData.getAddIncome();
 
-    appData.getBudgetMonth();    
-    appData.budgetDay = Math.floor(appData.budgetMonth / 30);    
+    appData.getBudgetMonth();
+    appData.budgetDay = Math.floor(appData.budgetMonth / 30);
 
     // appData.getInfoDeposit();
     appData.showResult();
+
+    // if (!isNumber(placeholderNumber[0])) {
+    //   alert('Введите число в поле "Месячный доход"');
+    // }
+
+    // if (!isRussianLetter(placeholderText[0])) {
+    //   alert('Введите число в поле "Месячный доход"');
+    // }
   },
 
   // Функция выводит на страницу результаты расчета
-  showResult: function() {
+  showResult: function () {
     resultBudgetMonth.value = appData.budgetMonth;
     resultBudgetDay.value = appData.budgetDay;
     resultExpensesMonth.value = appData.expensesMonth;
@@ -78,7 +120,7 @@ let appData = {
   // Функция добавляет дополнительный блок расходов при клике на +
   addExpensesBlock: function () {
 
-    let cloneExpensesItem = expensesItems[0].cloneNode(true);    
+    let cloneExpensesItem = expensesItems[0].cloneNode(true);
     cloneExpensesItem.childNodes.forEach(function (item) {
       item.value = '';
     });
@@ -113,9 +155,9 @@ let appData = {
   },
 
   // Функция записывает в массив addExpenses возможные расходы
-  getAddExpenses: function() {
+  getAddExpenses: function () {
     let additionalExpenses = additionalEspensesItem.value.split(',');
-    additionalExpenses.forEach(function(item) {
+    additionalExpenses.forEach(function (item) {
       item = item.trim();
       if (item !== '') {
         appData.addExpenses.push(item);
@@ -153,9 +195,9 @@ let appData = {
     })
   },
 
-   // Функция записывает в массив addIncome возможные доходы
+  // Функция записывает в массив addIncome возможные доходы
   getAddIncome: function () {
-    additionalIncomeItem.forEach(function(item) {
+    additionalIncomeItem.forEach(function (item) {
       let itemValue = item.value.trim();
       if (itemValue !== '') {
         appData.addIncome.push(itemValue);
@@ -218,7 +260,7 @@ let appData = {
   },
 
   // Функция для замены на странице значение в поле "Накопления за период" 
-  changeResultPeriodAccumulation: function() {
+  changeResultPeriodAccumulation: function () {
     resultPeriodAccumulation.value = appData.calcSavedMoney();
   },
 
