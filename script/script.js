@@ -43,7 +43,11 @@ let appData = {
 
   start: function () {
 
-    appData.budget = Number(monthIncome.value);
+    if(isNumber(monthIncome.value)) {
+      appData.budget = Number(monthIncome.value);
+    } else {
+      alert('Введите число в поле "Месячный доход"');
+    }
     appData.getExpenses();
     appData.getExtraIncome();
     appData.getExpensesMonth();
@@ -167,46 +171,6 @@ let appData = {
     return Number(appData.incomeMonth);
   },
 
-  // asking: function () {
-
-  //   if (confirm('Есть ли у вас дополнительный источник заработка')) {
-
-  //     let itemIncome = '';
-  //     do {
-  //       itemIncome = prompt('Какой у вас дополнительный заработок', 'программирование');
-  //     }
-  //     while (!isNaN(parseFloat(itemIncome)) || itemIncome === '' || itemIncome === null);
-
-  //     let cashIncome = 0;
-  //     do {
-  //       cashIncome = prompt('Сколько в месяц вы на этом зарабатываете', 20000);
-  //     }
-  //     while (!isNumber(cashIncome));
-
-  //     appData.income[itemIncome] = cashIncome;
-  //   }
-
-  //   let addExpences = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'квартплата, транспорт');
-  //   appData.addExpences = addExpences.toLowerCase().split(', ');
-
-  //   let exp = 0;
-  //   let keys = []; //массив для сохранения ключей объекта expenses   
-
-  //   for (let i = 0; i < 2; i++) {
-  //     keys.push(prompt('Введите обязательную статью расходов?', 'Статья расходов ' + (i + 1)));
-  //     do {
-  //       exp = prompt('Во сколько это обойдется?', 5000);
-  //       if (isNumber(exp)) {
-  //         appData.expenses[keys[i]] = +exp;
-  //       }
-  //     }
-  //     while (!isNumber(exp));
-  //   }
-
-  //   appData.deposit = confirm('Есть ли у вас депозит в банке?');
-  // },
-
-
   // Функция считает значение appData.budgetMonth
   getBudgetMonth: function () {
     return appData.budgetMonth = appData.budget + appData.incomeMonth - appData.expensesMonth;
@@ -280,26 +244,4 @@ periodSelect.addEventListener('input', appData.setPeriod);
 
 count.disabled = true;
 count.style.backgroundColor = 'red';
-monthIncome.addEventListener('change', appData.checkMonthIncome);
-
-// let achieveTime = appData.getTargetMonth(appData.mission, appData.budgetMonth);
-// if (achieveTime > 0) {
-//   console.log('Цель будет достигнута за ' + achieveTime + ' месяцев');
-// } else {
-//   console.log('Цель не будет достигнута');
-// }
-
-// console.log('Наша программа включает в себя данные:');
-// for (let key in appData) {
-//   console.log(key + ': ' + appData[key]);
-// }
-
-// function changeFirstLetter(str) {
-//   if (!str) return str;
-//   return str[0].toUpperCase() + str.slice(1);
-// }
-
-// for (let i = 0; i < appData.addExpences.length; i++) {
-//   appData.addExpences[i] = changeFirstLetter(appData.addExpences[i]);
-// }
-// console.log(appData.addExpences.join(', '));
+monthIncome.addEventListener('input', appData.checkMonthIncome);
