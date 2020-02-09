@@ -289,7 +289,7 @@ let appData = {
   },
 
   reset: function () {
-
+    let textInputs = document.querySelectorAll('[type="text"]');
     textInputs.forEach(function (item) {
       item.disabled = false;
       item.value = '';
@@ -297,11 +297,16 @@ let appData = {
 
     if (expensesItems.length > 1) {
       addExpenses.style.display = 'block';
-      // expensesItems.removeChild(expensesItems[0]);
+      expensesItems[0].parentNode.removeChild(expensesItems[expensesItems.length - 1]);
     }
+
+    // while (expensesItems.length > 1) {
+    //   expensesItems[0].parentNode.removeChild(expensesItems[expensesItems.length - 1]);
+    // }
 
     if (extraIncomeItems.length > 1) {
       addExtraIncome.style.display = 'block';
+      extraIncomeItems[0].parentNode.removeChild(extraIncomeItems[extraIncomeItems.length - 1]);
     }
 
     count.style.display = 'block';
