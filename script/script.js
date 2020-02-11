@@ -82,19 +82,19 @@ let appData = {
   // Функция запускает функции расчета и вывода
   start: function () {
 
-    appData.budget = Number(monthIncome.value);
-    appData.getExpenses();
-    appData.getExtraIncome();
-    appData.getExpensesMonth();
-    appData.getIncomeMonth();
-    appData.getAddExpenses();
-    appData.getAddIncome();
+    this.budget = Number(monthIncome.value);
+    this.getExpenses();
+    this.getExtraIncome();
+    this.getExpensesMonth();
+    this.getIncomeMonth();
+    this.getAddExpenses();
+    this.getAddIncome();
 
-    appData.getBudgetMonth();
-    appData.budgetDay = Math.floor(appData.budgetMonth / 30);
+    this.getBudgetMonth();
+    this.budgetDay = Math.floor(this.budgetMonth / 30);
 
-    // appData.getInfoDeposit();
-    appData.showResult();
+    // this.getInfoDeposit();
+    this.showResult();
   },
 
   // Функция выводит на страницу результаты расчета
@@ -260,7 +260,7 @@ let appData = {
     periodAmount.innerHTML = periodSelect.value;
   },
 
-  // Функция для замены на странице значение в поле "Накопления за период" 
+  // Функция для замены на странице значения в поле "Накопления за период" 
   changeResultPeriodAccumulation: function () {
     resultPeriodAccumulation.value = appData.calcSavedMoney();
   },
@@ -313,30 +313,33 @@ let appData = {
     cancel.style.display = 'none';
     deposit.checked = false;
     periodSelect.value = '1';
-    periodAmount.value = '1';
+    periodAmount.innerHTML = '1';
+    resultTargetAmount.value = '';
 
-    appData.addIncome = [];
-    appData.expenses = {};
-    appData.addExpenses = [];
-    appData.deposit = false;
-    appData.income = {};
-    appData.percentDeposit = 0;
-    appData.moneyDeposit = 0;
-    appData.budget = 0;
-    appData.budgetDay = 0;
-    appData.budgetMonth = 0;
-    appData.expensesMonth = 0;
-    appData.incomeMonth = 0;
-
-    appData.showResult();
+    this.addIncome = [];
+    this.expenses = {};
+    this.addExpenses = [];
+    this.deposit = false;
+    this.income = {};
+    this.percentDeposit = 0;
+    this.moneyDeposit = 0;
+    this.budget = 0;
+    this.budgetDay = 0;
+    this.budgetMonth = 0;
+    this.expensesMonth = 0;
+    this.incomeMonth = 0;
   },
 };
 
-appData.start.call(appData);
+count.addEventListener('click', function (event) {
+  appData.start.call(appData);
+});
 
-count.addEventListener('click', appData.start);
 count.addEventListener('click', appData.block);
-cancel.addEventListener('click', appData.reset);
+
+cancel.addEventListener('click', function (event) {
+  appData.reset.call(appData);
+});
 
 addExpenses.addEventListener('click', appData.addExpensesBlock);
 addExtraIncome.addEventListener('click', appData.addExtraIncomeBlock);
