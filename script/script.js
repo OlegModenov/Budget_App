@@ -295,18 +295,16 @@ let appData = {
       item.value = '';
     });
 
-    if (expensesItems.length > 1) {
-      addExpenses.style.display = 'block';
+    addExpenses.style.display = 'block';
+    while (expensesItems.length > 1) {
       expensesItems[0].parentNode.removeChild(expensesItems[expensesItems.length - 1]);
+      expensesItems = document.querySelectorAll('.expenses-items');
     }
 
-    // while (expensesItems.length > 1) {
-    //   expensesItems[0].parentNode.removeChild(expensesItems[expensesItems.length - 1]);
-    // }
-
-    if (extraIncomeItems.length > 1) {
-      addExtraIncome.style.display = 'block';
+    addExtraIncome.style.display = 'block';
+    while (extraIncomeItems.length > 1) {
       extraIncomeItems[0].parentNode.removeChild(extraIncomeItems[extraIncomeItems.length - 1]);
+      extraIncomeItems = document.querySelectorAll('.income-items');
     }
 
     count.style.display = 'block';
