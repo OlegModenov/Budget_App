@@ -116,31 +116,24 @@ class AppData {
   // Функция добавляет дополнительный блок доходов или расходов при клике на +
   addExpensesIncomeBlock(type) {
 
-    if (type === 'income') {
-      const cloneIncome = extraIncomeItems[0].cloneNode(true);
-      extraIncomeItems[0].parentNode.insertBefore(cloneIncome, addExtraIncome);
-      extraIncomeItems = document.querySelectorAll('.income-items');
-      cloneIncome.childNodes.forEach((item) => {
+    const addBlock = function (items) {
+      const blockClassTitle = items[0].className.split('-')[0]; // Первая часть названия класса
+      let blockItems = document.querySelectorAll(`.${blockClassTitle}-items`);
+      const plusButton = document.querySelector(`.${blockClassTitle}_add`);
+      const cloneBlock = blockItems[0].cloneNode(true);
+      blockItems[0].parentNode.insertBefore(cloneBlock, plusButton);
+      blockItems = document.querySelectorAll(`.${blockClassTitle}-items`);
+      cloneBlock.childNodes.forEach((item) => {
         item.value = '';
       });
 
-      if (extraIncomeItems.length === 3) {
-        addExtraIncome.style.display = 'none';
+      if (blockItems.length === 3) {
+        plusButton.style.display = 'none';
       }
     }
 
-    if (type === 'expenses') {
-      const cloneExpensesItem = expensesItems[0].cloneNode(true);
-      cloneExpensesItem.childNodes.forEach((item) => {
-        item.value = '';
-      });
-      expensesItems[0].parentNode.insertBefore(cloneExpensesItem, addExpenses);
-      expensesItems = document.querySelectorAll('.expenses-items');
-
-      if (expensesItems.length === 3) {
-        addExpenses.style.display = 'none';
-      }
-    }
+    if (type === 'income') addBlock(extraIncomeItems);
+    if (type === 'expenses') addBlock(expensesItems);
 
     placeholderNumber = document.querySelectorAll('[placeholder="Сумма"]');
     placeholderText = document.querySelectorAll('[placeholder="Наименование"]');
@@ -193,14 +186,14 @@ class AppData {
       }
     });
   }
-  
+
   getInfoDeposit() {
     if (this.deposit) {
       this.percentDeposit = depositPercentInput.value;
       this.moneyDeposit = depositAmountInput.value;
     }
   }
-  
+
   changeDepositPercent() {
     const selectValue = this.value;
     if (selectValue === 'other') {
@@ -351,7 +344,7 @@ class AppData {
       this.setPeriod.call(this);
     });
 
-    monthIncome.addEventListener('input',  this.checkMonthIncome);
+    monthIncome.addEventListener('input', this.checkMonthIncome);
 
     depositCheck.addEventListener('change', this.depositHandler.bind(this));
   }
