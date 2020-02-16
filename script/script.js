@@ -92,8 +92,7 @@ class AppData {
 
     this.budget = Number(monthIncome.value);
     this.getExpensesIncome();
-    this.getAddExpenses();
-    this.getAddIncome();
+    this.getAddIncomeExpenses();
     this.getInfoDeposit();
     this.getBudget();
 
@@ -166,19 +165,16 @@ class AppData {
     }
   }
 
-  // Функция записывает в массив addExpenses возможные расходы
-  getAddExpenses() {
+  // Функция записывает в массивы addExpenses и addIncome возможные расходы
+  getAddIncomeExpenses() {
     const additionalExpenses = additionalEspensesItem.value.split(',');
     additionalExpenses.forEach((item) => {
       item = item.trim();
       if (item !== '') {
         this.addExpenses.push(item);
       }
-    });
-  }
+    }); 
 
-  // Функция записывает в массив addIncome возможные доходы
-  getAddIncome() {
     additionalIncomeItems.forEach((item) => {
       const itemValue = item.value.trim();
       if (itemValue !== '') {
